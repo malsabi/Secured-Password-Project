@@ -1,0 +1,8 @@
+.footer{
+    display: flex;
+}
+
+.socialMedia{
+    height: 3rem;
+    width: auto;
+}
