@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+      font-family: "Cronos Pro Regular";
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+
+      font-size: 20px;
+      display: flex;
+      justify-content: start;
+      align-self: flex-start;
+      flex-direction: column;
+    }
+
+    .row {
+      width: 100%;
+
+      display: flex;
+      justify-content: center;
+
+      margin-top: 4rem;
+    }
+
+    .row-left {
+      width: 100%;
+
+      display: flex;
+      justify-content: start;
+
+      margin-top: 4rem;
+    }
+
+    img {
+      height: 10rem;
+    }
+
+    .col {
+      width: 50%;
+    }
+
+    .col-data {
+      width: 100%;
+    }
+
+    .title {
+      width: 100%;
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .warning {
+      font-weight: bold;
+      color: red;
+    }
+
+    strong {
+      text-transform: capitalize;
+    }
+
+    .strong {
+      color: #01a917;
+    }
+
+    .good {
+      color: #0b75ed;
+    }
+
+    .fair {
+      color: #ebbd04;
+    }
+
+    .weak {
+      color: #e20b07;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="row">
+    <div class="col">
+      <img src="images/logo.png" alt="" />
+    </div>
+    <div class="col">
+      <div class="col-data">
+        <p class="title">Student Report</p>
+
+        <p>Student Name: <%= student.student_name %>
+        </p>
+        <p>Student ID: <%= student.student_id %>
+        </p>
+        <p>Student Major: <%= student.student_major %>
+        </p>
+        <p>Student Year: <%= student.student_year %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <p>
+      Student Password Result is:
+      <strong class="<%= student.password_strength %>">
+        <%= student.password_strength %>
+      </strong>
+      <br />
+      because the student added
+    </p>
+  </div>
+
+  <div class="row">
+    <ul>
+      <% var complexity=student.password_complexity.slice(1,-1).split("-")%>
+        <% if (complexity[0].toString() !=='0' ){ %>
+          <li>Uppercase Letters</li>
+          <% } %>
+            <% if (complexity[1].toString() !=='0' ){ %>
+              <li>Lowercase Letters</li>
+              <% } %>
+                <% if (complexity[2].toString() !=='0' ){ %>
+                  <li>Numbers</li>
+                  <% } %>
+                    <% if (complexity[3].toString() !=='0' ){ %>
+                      <li>Symbols</li>
+                      <% } %>
+                        <% if (complexity[4].toString() !=='0' ){ %>
+                          <li>Space</li>
+                          <% } %>
+                            <% if (complexity[6] !=='false' ){ %>
+                              <li>Duplicated Password</li>
+                              <% } %>
+    </ul>
+  </div>
+
+  <div class="row">
+    <p class="warning">
+      *Student is recommended to add a
+      <% if (complexity[0].toString()==='0' ){ %>Uppercase Letters, <% } %>
+          <% if (complexity[1].toString()==='0' ){ %>Lowercase Letters, <% } %>
+              <% if (complexity[2].toString()==='0' ){ %>Numbers, <% } %>
+                  <% if (complexity[3].toString()==='0' ){ %> Symbols, <% } %>
+                      <% if (complexity[4].toString()==='0' ){ %> Space, <% } %>
+                          <% if (complexity[6].toString()==='false' ){ %> Duplicated Password, <% } %> to have
+                              a strong password
+    </p>
+  </div>
+</body>
+
+</html>

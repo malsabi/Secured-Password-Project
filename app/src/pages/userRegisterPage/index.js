@@ -3,13 +3,14 @@ import './style.css';
 import Button from '../../components/Button';
 import Label from '../../components/Label';
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 function UserRegisterPage() {
 	const [inputs, setInputs] = useState({});
 	const [isShown, setIsShown] = useState(false);
 
 	// Variable Errors
-	const [nameError, setNameError] = useState("Hello World");
+	const [nameError, setNameError] = useState(null);
 	const [idError, setIdError] = useState(null);
 	const [yearError, setYearError] = useState(null);
 	const [majorError, setMajorError] = useState(null);
@@ -34,7 +35,7 @@ function UserRegisterPage() {
 	}
 
 	async function handleResponse() {
-		const response = await fetch("http://localhost:3001/", {
+		const response = await fetch("http://localhost:3001/insertStudent", {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
@@ -43,9 +44,19 @@ function UserRegisterPage() {
 			body: JSON.stringify(inputs)
 		});
 
-		if(response.ok) return setIsShown(current => !current)
-
 		const data = await response.json();
+
+		console.log(data)
+		if(response.ok) {
+			setIsShown(current => !current)
+			const cookies = new Cookies();
+			cookies.set('studentID', inputs.id, {path: "/"});
+
+			return true;
+		}
+
+
+		console.log(data['error']['id']);
 
 		if(data['error']['id']) {
 			id.current.classList.add('is-invalid');

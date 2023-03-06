@@ -2,8 +2,18 @@ import React from 'react';
 import './style.css';
 import StrengthMeter from '../../components/StrengthMeter';
 import Label from '../../components/Label';
-
+import Cookies from 'universal-cookie';
 function TestPasswordPage() {
+	const cookies = new Cookies();
+	const studentID = cookies.get('studentID');
+	console.log(studentID)
+	// cookies.remove('studentID', { path: '/' });
+
+	if(!studentID){
+		window.location.replace('/userRegister');
+	}
+
+
   	return (
 		<div className='w-100 d-flex flex-column justify-content-center '>
 			<div className='d-flex justify-content-center'>
@@ -11,10 +21,9 @@ function TestPasswordPage() {
 			</div>
 			<div className='row'>
 				<div className='col-12 d-flex justify-content-center align-items-center'>
-					<StrengthMeter></StrengthMeter>
+					<StrengthMeter studentID = {studentID}></StrengthMeter>
 
 				</div>
-					<div style={{fontSize: '12px'}} className='w-100 alert alert-light text-center text-uppercase fs-6'>Entries are 100% secure and not stored in any way or shared with anyone</div>
 			</div>
 		</div>
   	)
